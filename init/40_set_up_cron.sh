@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -f "/rsync.sh" ]; then
+if [ ! -f "/config/rsync.sh" ]; then
   echo "copying default rsync script"
   cp /app/script/rsync.sh /config/
 else
