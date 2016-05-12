@@ -14,3 +14,6 @@ COPY init/ /etc/my_init.d/
 COPY cron/ /etc/cron.d/
 COPY app/script/ /app/script/
 RUN chmod -v +x /etc/service/*/run /etc/my_init.d/*.sh /app/script/*.sh
+
+# Volumes and Ports
+VOLUME /config
