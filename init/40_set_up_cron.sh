@@ -6,3 +6,6 @@ if [ ! -f "/config.txt" ]; then
 else
   echo "using existing rsync script"
 fi
+
+chown -R nobody:users /config
+chmod -R g+rw /config
