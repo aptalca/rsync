@@ -1,1 +1,1 @@
-0 2 * * 3 abc /config/sync.sh 2>&1 >> /config/log.txt
+0 2 * * 3 root /config/rsync.sh 2>&1 >> /config/log.txt
