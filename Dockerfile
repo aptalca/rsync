@@ -5,6 +5,7 @@ LABEL maintainer="aptalca"
 RUN \
  apt-get update && \
  apt-get install -y \
+	logrotate \
 	rsync && \
  rm -rf \
 	/tmp/* \
