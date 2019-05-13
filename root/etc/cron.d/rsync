@@ -1,0 +1,2 @@
+# run rsync
+0 2 * * 3 root /config/rsync.sh 2>&1 >> /config/logs/log.txt
