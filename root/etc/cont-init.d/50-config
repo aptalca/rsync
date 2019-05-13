@@ -6,7 +6,7 @@ mkdir -p \
 
 if [ ! -f "/config/rsync.sh" ]; then
 	echo "copying default rsync script"
-	cp /app/script/rsync.sh /config/
+	cp /app/rsync.sh /config/
 else
 	echo "using existing rsync script"
 fi
