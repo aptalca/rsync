@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
 if [ ! -f "/config/rsync.sh" ]; then
   echo "copying default rsync script"
@@ -7,5 +7,6 @@ else
   echo "using existing rsync script"
 fi
 
-chown -R nobody:users /config
-chmod -R g+rw /config
+# permissions
+chown -R abc:abc \
+	/config
