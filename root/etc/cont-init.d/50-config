@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv bash
+
+# create folders
+mkdir -p \
+	/config/logs
+
+if [ ! -f "/config/rsync.sh" ]; then
+	echo "copying default rsync script"
+	cp /app/rsync.sh /config/
+else
+	echo "using existing rsync script"
+fi
+
+# permissions
+chown -R abc:abc \
+	/config

@@ -1,0 +1,11 @@
+/config/logs/*.log {
+ weekly
+ rotate 52
+ compress
+ delaycompress
+ nodateext
+ missingok
+ notifempty
+ sharedscripts
+ su abc abc
+}
