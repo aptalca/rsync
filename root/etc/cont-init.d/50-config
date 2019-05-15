@@ -2,15 +2,19 @@
 
 # create folders
 mkdir -p \
-	/config/logs
+        /config/{logs,crontabs}
 
 if [ ! -f "/config/rsync.sh" ]; then
-	echo "copying default rsync script"
-	cp /app/rsync.sh /config/
+        echo "copying default rsync script"
+        cp /app/rsync.sh /config/
 else
-	echo "using existing rsync script"
+        echo "using existing rsync script"
 fi
+
+# copy default crontabs
+[[ ! -f /config/crontabs/root ]] && \
+        cp /defaults/root /config/crontabs/
 
 # permissions
 chown -R abc:abc \
-	/config
+        /config

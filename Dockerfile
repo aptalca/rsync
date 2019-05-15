@@ -1,18 +1,17 @@
-FROM lsiobase/ubuntu:bionic
+FROM lsiobase/alpine:3.9
 
 LABEL maintainer="aptalca"
 
 RUN \
- apt-get update && \
- apt-get install -y \
-	logrotate \
-	rsync && \
+ echo "**** install runtime packages ****" && \
+ apk add --no-cache --upgrade \
+        logrotate \
+        openssh-client \
+        rsync && \
  echo "**** fix logrotate ****" && \
  sed -i "s#/var/log/messages {}.*# #g" /etc/logrotate.conf && \
  rm -rf \
-	/tmp/* \
-	/var/lib/apt/lists/* \
-	/var/tmp/*
+        /tmp/*
 
 # add local files
 COPY /root /
