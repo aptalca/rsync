@@ -6,4 +6,4 @@
 0       3       *       *       6       run-parts /etc/periodic/weekly
 0       5       1       *       *       run-parts /etc/periodic/monthly
 # rsync
-0       2       *       *       3       /config/rsync.sh &>> /config/logs/log.txt && chown abc:abc /config/logs/log.txt
+0       2       *       *       3       /config/rsync.sh >> /config/logs/log.txt 2>&1 && chown abc:abc /config/logs/log.txt
