@@ -1,4 +1,4 @@
-/config/logs/*.log {
+/config/logs/*.txt {
  weekly
  rotate 52
  compress
