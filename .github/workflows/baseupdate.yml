@@ -46,5 +46,5 @@ jobs:
             git commit -m '[bot] Updating baseimage digest' || :
             git push || :
           else
-            "Baseimage seems to be the same. Skipping."
+            echo "Baseimage seems to be the same. Skipping."
           fi
