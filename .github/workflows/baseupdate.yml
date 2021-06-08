@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  wheelie-scheduler:
+  base-updater:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
@@ -28,19 +28,18 @@ jobs:
             echo "Unable to retrieve external digest. Exiting."
             exit 0
           else
-            echo "External digest retrieved: ${EXTDIGEST}"
+            echo "External digest retrieved:  ${EXTDIGEST}"
           fi
           LASTDIGEST=$(cat baseimage-digest.txt)
           if [ "${LASTDIGEST}" != "${EXTDIGEST}" ]; then
             echo "Last used baseimage digest: ${LASTDIGEST}"
-            echo "Current external digest:    ${EXTDIGEST}"
             echo "Baseimage seems to have been updated. Updating baseimage digest and triggering a build."
             curl -iX POST \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Authorization: token ${{ secrets.CR_PAT }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -d "{\"ref\":\"refs/heads/master\"}" \
               https://api.github.com/repos/aptalca/rsync/actions/workflows/BuildImage.yml/dispatches
-            echo "${EXTDIGEST}" > baseimage-digest.txt
+            echo -n "${EXTDIGEST}" > baseimage-digest.txt
             git config --local user.email "bot@aptalca.doot"
             git config --local user.name "AptalcaBot"
             git add . || :
