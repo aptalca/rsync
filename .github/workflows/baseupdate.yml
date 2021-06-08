@@ -1,0 +1,43 @@
+name: Base Updater
+
+on:
+  schedule:
+    - cron:  '10 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  wheelie-scheduler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2.3.3
+
+      - name: Check for updates and trigger
+        run: |
+          DISTRO=$(cat Dockerfile | grep 'FROM' | sed 's|.*baseimage-\(.*\):.*|\1|')
+          TAG=$(cat Dockerfile | grep 'FROM' | sed 's|.*:\(.*\)|\1|')
+          token=$(curl -sX GET \
+            "https://ghcr.io/token?scope=repository%3Alinuxserver%2Fbaseimage-${DISTRO}%3Apull" \
+            | jq -r '.token')
+          EXTDIGEST=$(curl -I \
+            --header "Accept: application/vnd.docker.distribution.manifest.v2+json" \
+            --header "Authorization: Bearer ${token}" \
+            "https://ghcr.io/v2/linuxserver/baseimage-${DISTRO}/manifests/${TAG}" \
+            | grep 'docker-content-digest' | awk '{print $2}')
+          if [ -z "${EXTDIGEST}" ]; then
+            echo "Unable to retrieve external digest. Exiting."
+            exit 0
+          else
+            echo "External digest retrieved: ${EXTDIGEST}"
+          fi
+          if [ "$(cat baseimage-digest.txt)" != "${EXTDIGEST}" ]; then
+            echo "Baseimage seems to have been updated. Updating baseimage digest and triggering a build."
+            echo "${EXTDIGEST}" > baseimage-digest.txt
+            git config --local user.email "bot@aptalca.io"
+            git config --local user.name "AptalcaBot"
+            git add . || :
+            git commit -m '[bot] Updating baseimage digest' || :
+            git push || :
+          else
+            "Baseimage seem to be the same. Skipping."
+          fi
