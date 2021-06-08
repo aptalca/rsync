@@ -5,6 +5,9 @@ on:
     - cron:  '10 */6 * * *'
   workflow_dispatch:
 
+env:
+  REPO: "rsync"
+
 jobs:
   base-updater:
     runs-on: ubuntu-latest
@@ -38,7 +41,7 @@ jobs:
               -H "Authorization: token ${{ secrets.CR_PAT }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -d "{\"ref\":\"refs/heads/master\"}" \
-              https://api.github.com/repos/aptalca/rsync/actions/workflows/BuildImage.yml/dispatches
+              https://api.github.com/repos/aptalca/${REPO}/actions/workflows/BuildImage.yml/dispatches
             echo -n "${EXTDIGEST}" > baseimage-digest.txt
             git config --local user.email "bot@aptalca.doot"
             git config --local user.name "AptalcaBot"
