@@ -19,10 +19,10 @@ jobs:
         run: |
           docker tag ${{ github.sha }} ghcr.io/${ENDPOINT}:${{ github.sha }}
           docker tag ${{ github.sha }} ghcr.io/${ENDPOINT}:latest
-#      - name: Login to GitHub Container Registry
-#        if: ${{ github.ref == format('refs/heads/master') }}
-#        run: |
-#          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u aptalca --password-stdin
+      - name: Login to GitHub Container Registry
+        if: ${{ github.ref == format('refs/heads/master') }}
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u aptalca --password-stdin
       - name: Push tags to GitHub Container Registry
         if: ${{ github.ref == format('refs/heads/master') }}
         run: |
