@@ -24,6 +24,7 @@ jobs:
             | jq -r '.token')
           EXTDIGEST=$(curl -I \
             --header "Accept: application/vnd.docker.distribution.manifest.v2+json" \
+            --header "Accept: application/vnd.oci.image.index.v1+json" \
             --header "Authorization: Bearer ${token}" \
             "https://ghcr.io/v2/linuxserver/baseimage-${DISTRO}/manifests/${TAG}" \
             | grep 'docker-content-digest' | awk '{print $2}')
