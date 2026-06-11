@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-alpine:3.23
+FROM ghcr.io/linuxserver/baseimage-alpine:3.24
 
 LABEL maintainer="aptalca"
 
@@ -12,6 +12,7 @@ RUN \
   sed -i "s#/var/log/messages {}.*# #g" /etc/logrotate.conf && \
   sed -i 's,/usr/sbin/logrotate /etc/logrotate.conf,/usr/sbin/logrotate /etc/logrotate.conf -s /config/logrotate.status,g' \
     /etc/periodic/daily/logrotate && \
+  rm -rf /etc/crontabs/root && \
   rm -rf \
     /tmp/*
 
